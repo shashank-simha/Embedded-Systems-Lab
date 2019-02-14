@@ -15,7 +15,7 @@ Steps
 
 5. Export architecture config
 		export ARCH=arm
-		export CROSS_COMPILE=arm-linux=gnueabi-
+		export CROSS_COMPILE=arm-linux-gnueabi-
 		
 6. make board config
 		make vexpress_defconfig
@@ -26,10 +26,14 @@ Steps
 				-> Allow old ABI binaries to run with this kernel
 	press y to activate and save
 	
-8. navigte to /linux-4.9.11/arch/arm/boot
+
+8. compile the kernel
+		make -j 2 all
+		
+9. navigte to /linux-4.9.11/arch/arm/boot
 		cd linux-4.9.11/arch/arm/boot
 
-9. run kernel without any application
+10. run kernel without any application
 		qemu-system-arm -M vexpress-a9 -dtb ./dts/vexpress-v2p-ca9.dtb -kernel zImage -append "console=ttyAMA0" -nographic
 	You should get kernel panic error
 
