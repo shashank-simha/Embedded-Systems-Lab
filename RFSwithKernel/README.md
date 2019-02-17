@@ -29,6 +29,7 @@ Compile Kernel
 	press y to activate and save
 	
 8. compile the kernel
+		
 		make -j 2 all
 
 Compile RootFileSystem
@@ -42,6 +43,7 @@ Compile RootFileSystem
 			tar xvf busybox-1.29.0.tar.bz2
 	
 3. move to the unzipped folder
+			
 			cd busybox-1.29.0
 
 4. clean the previous builds
