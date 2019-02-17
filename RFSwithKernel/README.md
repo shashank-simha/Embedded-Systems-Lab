@@ -34,35 +34,44 @@ Compile Kernel
 Compile RootFileSystem
 
 1. download busybox
-		wget https://busybox.net/downloads/busybox-1.29.0.tar.bz2
+		
+			wget https://busybox.net/downloads/busybox-1.29.0.tar.bz2
 
 2. unzip the downloaded busybox
-		tar xvf busybox-1.29.0.tar.bz2
+		
+			tar xvf busybox-1.29.0.tar.bz2
 	
 3. move to the unzipped folder
-		cd busybox-1.29.0
+			cd busybox-1.29.0
 
 4. clean the previous builds
-		make clean
-		make distclean
+	
+			make clean
+			make distclean
 
 5. configure default architecture
-		make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- defconfig
+		
+			make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- defconfig
 		
 6. enable static generation of binaries
-		make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig
+	
+			make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- menuconfig
+	
 	go to "settings" -> under build options check "build static binary"	
 	press y to activate and save
 
 7. compile busybox
-		make -j 4 install
+		
+			make -j 4 install
 	
 8. navigte to _install/ folder and create important directories
-		cd _install
-		mkdir proc sys dev etc etc/init.d
+	
+			cd _install
+			mkdir proc sys dev etc etc/init.d
 
 9. create etc/init.d/rcS file and enter the following shell code
-		nano etc/init.d/rcS
+		
+			nano etc/init.d/rcS
 			
 			#!/bin/sh
 			mount -t proc none /proc
@@ -70,15 +79,18 @@ Compile RootFileSystem
 			/sbin/mdev -s
 
 10. Mark rcS file as executable
-		chmod +x etc/init.d/rcS
+		
+			chmod +x etc/init.d/rcS
 
 11. Copy our Custom Memory Device Driver to filesystem (Optional)
 	    ->Copy Driver *.ko to a new folder, memDriver
-		mkdir memDriver/
-		cp <path to driver files> memDriver/
+		
+			mkdir memDriver/
+			cp <path to driver files> memDriver/
 		
 12. create RFS image with the cpiotool
-		find .|cpio -o --format=newc > ../rootfs.img
+	
+			find .|cpio -o --format=newc > ../rootfs.img
 
 Running the kernel and mounting RFS with QEMU
 
