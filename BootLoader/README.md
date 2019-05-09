@@ -37,10 +37,10 @@ Steps
 		arm-none-eabi-as -mcpu=arm926ej -g startup.s -o startup.o
 		arm-none-eabi-ld -T linker.ld startup.o hello.o -o hello.elf
 		arm-none-eabi-objcopy -O binary hello.elf hello.bin
-		mkimage -A arm -C none -O linux -T kernel -d .bin -a 0x00100000 -e 0x00100000 hello.uimg
+		mkimage -A arm -C none -O linux -T kernel -d hello.bin -a 0x00100000 -e 0x00100000 hello.uimg
 		
 9. create a single binary file with application and u-boot binaries
-		cat u-boot.bin $1.uimg > flash.bin
+		cat u-boot.bin hello.uimg > flash.bin
 
 10. check the starting address of application
 		printf "0x%X\n" $(expr $(stat -c%s u-boot.bin) + 65536)
