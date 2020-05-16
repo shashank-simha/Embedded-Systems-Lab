@@ -33,6 +33,7 @@ Steps
 		make -j 2 all
 		
 8. create and compile startup, linker and application files
+		
 		arm-none-eabi-gcc -c -nostdlib -mcpu=arm926ej-s hello.c -o hello.o
 		arm-none-eabi-as -mcpu=arm926ej -g startup.s -o startup.o
 		arm-none-eabi-ld -T linker.ld startup.o hello.o -o hello.elf
@@ -40,13 +41,17 @@ Steps
 		mkimage -A arm -C none -O linux -T kernel -d hello.bin -a 0x00100000 -e 0x00100000 hello.uimg
 		
 9. create a single binary file with application and u-boot binaries
+		
 		cat u-boot.bin hello.uimg > flash.bin
 
 10. check the starting address of application
+		
 		printf "0x%X\n" $(expr $(stat -c%s u-boot.bin) + 65536)
 
 11. run bootloader with application
+		
 		qemu-system-arm -M versatilepb -m 1024M -kernel flash.bin -nographic
 
 12. Load the application (Enter the bootm value in qemu terminal)
+		
 		bootm [address]
